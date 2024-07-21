@@ -4,8 +4,10 @@ import sequelize from '../config/database';
 class SportEvent extends Model {
     public id!: number;
     public event_name!: string;
-    public start_time!: Date;
-    public end_time!: Date;
+    public team1_name!: string;
+    public team2_name!: string;
+    public event_date!: Date;
+    public event_time!: string;
     public odds_win!: number;
     public odds_draw!: number;
     public odds_lose!: number;
@@ -22,12 +24,20 @@ SportEvent.init({
         type: DataTypes.STRING,
         allowNull: false,
     },
-    start_time: {
+    team1_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    team2_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    event_date: {
         type: DataTypes.DATE,
         allowNull: false,
     },
-    end_time: {
-        type: DataTypes.DATE,
+    event_time: {
+        type: DataTypes.STRING,
         allowNull: false,
     },
     odds_win: {
