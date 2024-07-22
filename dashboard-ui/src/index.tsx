@@ -5,7 +5,10 @@ import store from './store';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
 import './index.css';
+import './styles/modal.css';
+import './styles/dropdown.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

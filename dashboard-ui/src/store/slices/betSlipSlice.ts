@@ -7,17 +7,19 @@ interface BetSlip {
   team2_name: string;
   bet_type: string;
   odds: number;
-  amount: number; // Add the amount property
+  amount: number;
 }
 
 interface BetSlipState {
   bets: BetSlip[];
   selectedBetId: number | null;
+  balance: number;
 }
 
 const initialState: BetSlipState = {
   bets: [],
   selectedBetId: null,
+  balance: 0, // Initial balance
 };
 
 const betSlipSlice = createSlice({
@@ -45,8 +47,11 @@ const betSlipSlice = createSlice({
         state.selectedBetId = null; // Clear selected bet if it matches the removed bet
       }
     },
+    updateBalance: (state, action: PayloadAction<number>) => {
+      state.balance = action.payload;
+    },
   },
 });
 
-export const { addBet, updateBetAmount, removeBet } = betSlipSlice.actions;
+export const { addBet, updateBetAmount, removeBet, updateBalance } = betSlipSlice.actions;
 export default betSlipSlice.reducer;

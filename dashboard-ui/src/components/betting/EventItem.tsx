@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addBet } from '../../store/slices/betSlipSlice';
 import { RootState } from '../../store';
+import { addBet, removeBet } from '../../store/slices/betSlipSlice';
 
 interface EventItemProps {
   event: {
@@ -19,30 +19,35 @@ interface EventItemProps {
 
 const EventItem: React.FC<EventItemProps> = ({ event }) => {
   const dispatch = useDispatch();
-  const selectedBetId = useSelector((state: RootState) => state.betSlip.selectedBetId);
   const bets = useSelector((state: RootState) => state.betSlip.bets);
   const [selectedOdds, setSelectedOdds] = useState<string | null>(null);
 
   useEffect(() => {
-    const bet = bets.find(bet => bet.id === event.id);
-    if (bet) {
-      setSelectedOdds(bet.bet_type);
+    const existingBet = bets.find(bet => bet.id === event.id);
+    if (existingBet) {
+      setSelectedOdds(existingBet.bet_type);
     } else {
       setSelectedOdds(null);
     }
   }, [bets, event.id]);
 
   const handleBetClick = (bet_type: string, odds: number) => {
-    setSelectedOdds(bet_type);
-    dispatch(addBet({
-      id: event.id,
-      event_name: event.event_name,
-      team1_name: event.team1_name,
-      team2_name: event.team2_name,
-      bet_type,
-      odds,
-      amount: 0, // Initialize with a default amount
-    }));
+    const existingBet = bets.find(bet => bet.id === event.id && bet.bet_type === bet_type);
+    if (existingBet) {
+      dispatch(removeBet(event.id));
+      setSelectedOdds(null);
+    } else {
+      dispatch(addBet({
+        id: event.id,
+        event_name: event.event_name,
+        team1_name: event.team1_name,
+        team2_name: event.team2_name,
+        bet_type,
+        odds,
+        amount: 0
+      }));
+      setSelectedOdds(bet_type);
+    }
   };
 
   return (
@@ -64,30 +69,30 @@ const EventItem: React.FC<EventItemProps> = ({ event }) => {
       <div className="flex items-center space-x-4">
         <div
           className={`text-center cursor-pointer p-2 px-6 rounded-lg ${
-            selectedOdds === 'win' ? 'bg-[#35FF97] text-black' : 'bg-gray-700 hover:bg-[#35FF97] text-white'
+            selectedOdds === 'win' ? 'bg-green-500' : 'bg-gray-700 hover:bg-gray-600'
           }`}
           onClick={() => handleBetClick('win', event.odds_win)}
         >
-          <span className="block text-sm">1</span>
-          <span className="block font-bold">{event.odds_win.toFixed(2)}</span>
+          <span className="block text-gray-400 text-sm">1</span>
+          <span className="block font-bold text-white">{event.odds_win.toFixed(2)}</span>
         </div>
         <div
           className={`text-center cursor-pointer p-2 px-6 rounded-lg ${
-            selectedOdds === 'draw' ? 'bg-[#35FF97] text-black' : 'bg-gray-700 hover:bg-[#35FF97] text-white'
+            selectedOdds === 'draw' ? 'bg-green-500' : 'bg-gray-700 hover:bg-gray-600'
           }`}
           onClick={() => handleBetClick('draw', event.odds_draw)}
         >
-          <span className="block text-sm">X</span>
-          <span className="block font-bold">{event.odds_draw.toFixed(2)}</span>
+          <span className="block text-gray-400 text-sm">X</span>
+          <span className="block font-bold text-white">{event.odds_draw.toFixed(2)}</span>
         </div>
         <div
           className={`text-center cursor-pointer p-2 px-6 rounded-lg ${
-            selectedOdds === 'lose' ? 'bg-[#35FF97] text-black' : 'bg-gray-700 hover:bg-[#35FF97] text-white'
+            selectedOdds === 'lose' ? 'bg-green-500' : 'bg-gray-700 hover:bg-gray-600'
           }`}
           onClick={() => handleBetClick('lose', event.odds_lose)}
         >
-          <span className="block text-sm">2</span>
-          <span className="block font-bold">{event.odds_lose.toFixed(2)}</span>
+          <span className="block text-gray-400 text-sm">2</span>
+          <span className="block font-bold text-white">{event.odds_lose.toFixed(2)}</span>
         </div>
       </div>
     </div>

@@ -7,7 +7,8 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     const { username, email, password } = req.body;
     try {
         const user = await User.create({ username, email, password });
-        res.status(201).json({ message: 'User registered successfully' });
+        const token = jwt.sign({ userId: user.id, username, balance: 5950 }, JWT_SECRET, { expiresIn: '1h' });
+        res.status(200).json({ token });
     } catch (error) {
         console.error('Error registering user:', error);
         res.status(500).json({ message: 'Error registering user' });
@@ -19,7 +20,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     try {
         const user = await User.findOne({ where: { username } });
         if (user && await user.validPassword(password)) {
-            const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ userId: user.id, username, balance: 5950 }, JWT_SECRET, { expiresIn: '1h' });
             res.status(200).json({ token });
         } else {
             res.status(401).json({ message: 'Invalid credentials' });
