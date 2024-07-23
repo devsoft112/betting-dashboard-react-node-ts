@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { removeBet } from '../../store/slices/betSlipSlice';
+import { removeBet, updateBetAmount } from '../../store/slices/betSlipSlice';
 import { BetSlip } from '../../store/slices/betSlipSlice';
 import { useAuth } from '../../context/AuthContext';
 
@@ -8,9 +8,10 @@ interface BetSlipItemProps {
   bet: BetSlip;
   invalidBetIds: number[];
   handleSingleBetAmountChange: (id: number, amount: number) => void;
+  betType: 'single' | 'combo';
 }
 
-const BetSlipItem: React.FC<BetSlipItemProps> = ({ bet, invalidBetIds, handleSingleBetAmountChange }) => {
+const BetSlipItem: React.FC<BetSlipItemProps> = ({ bet, invalidBetIds, handleSingleBetAmountChange, betType }) => {
   const dispatch = useDispatch();
   const { user } = useAuth();
 
@@ -30,21 +31,23 @@ const BetSlipItem: React.FC<BetSlipItemProps> = ({ bet, invalidBetIds, handleSin
       </div>
       <p className="text-sm mt-2">Odds: {bet.odds}</p>
       <p className="text-sm">Possible win: ${bet.amount ? (bet.amount * bet.odds).toFixed(2) : '0.00'}</p>
-      <div className="flex items-center space-x-2 mt-2">
-        <input
-          type="number"
-          className={`bg-gray-600 text-white p-2 rounded w-full ${invalidBetIds.includes(bet.id) ? 'border border-red-500' : ''}`}
-          value={bet.amount || ''}
-          onChange={(e) => handleSingleBetAmountChange(bet.id, parseFloat(e.target.value) || 0)}
-          placeholder="Bet amount"
-        />
-        <button
-          className="bg-gray-600 text-white p-2 rounded"
-          onClick={() => handleSingleBetAmountChange(bet.id, user?.balance ?? 0)}
-        >
-          Max
-        </button>
-      </div>
+      {betType === 'single' && (
+        <div className="flex items-center space-x-2 mt-2">
+          <input
+            type="number"
+            className={`bg-gray-600 text-white p-2 rounded w-full ${invalidBetIds.includes(bet.id) ? 'border border-red-500' : ''}`}
+            value={bet.amount || ''}
+            onChange={(e) => handleSingleBetAmountChange(bet.id, parseFloat(e.target.value) || 0)}
+            placeholder="Bet amount"
+          />
+          <button
+            className="bg-gray-600 text-white p-2 rounded"
+            onClick={() => handleSingleBetAmountChange(bet.id, user?.balance ?? 0)}
+          >
+            Max
+          </button>
+        </div>
+      )}
     </div>
   );
 };
