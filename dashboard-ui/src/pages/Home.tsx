@@ -4,11 +4,11 @@ import BetSlip from '../components/betting/BetSlip';
 
 const Home: React.FC = () => {
   return (
-    <div className="flex">
-      <div className="w-3/4">
+    <div className="flex flex-col xl:flex-row">
+      <div className="w-full xl:w-2/3">
         <EventList />
       </div>
-      <div className="w-1/4">
+      <div className="w-full xl:w-1/3">
         <BetSlip />
       </div>
     </div>

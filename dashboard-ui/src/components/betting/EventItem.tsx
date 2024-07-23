@@ -51,8 +51,8 @@ const EventItem: React.FC<EventItemProps> = ({ event }) => {
   };
 
   return (
-    <div className="bg-gray-800 p-4 rounded-lg flex justify-between items-center mb-4">
-      <div>
+    <div className="bg-gray-800 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-center mb-4">
+      <div className="w-full sm:w-auto mb-4 sm:mb-0">
         <h3 className="text-sm font-bold text-gray-400">{event.event_name}</h3>
         <p className="text-sm text-gray-400">{new Date(event.event_date).toLocaleDateString()} • {event.event_time}</p>
         <div className="mt-2">
@@ -66,33 +66,33 @@ const EventItem: React.FC<EventItemProps> = ({ event }) => {
           </div>
         </div>
       </div>
-      <div className="flex items-center space-x-4">
+      <div className="flex w-full sm:w-auto space-x-2 sm:space-x-4">
         <div
-          className={`text-center cursor-pointer p-2 px-6 rounded-lg ${
-            selectedOdds === 'win' ? 'bg-green-500' : 'bg-gray-700 hover:bg-gray-600'
+          className={`text-center cursor-pointer p-2 flex-1 sm:flex-none sm:w-24 sm:h-16 rounded-lg ${
+            selectedOdds === 'win' ? 'bg-[#35FF97] text-gray-700' : 'bg-gray-700 hover:bg-gray-600'
           }`}
           onClick={() => handleBetClick('win', event.odds_win)}
         >
           <span className="block text-gray-400 text-sm">1</span>
-          <span className="block font-bold text-white">{event.odds_win.toFixed(2)}</span>
+          <span className="block font-bold">{event.odds_win.toFixed(2)}</span>
         </div>
         <div
-          className={`text-center cursor-pointer p-2 px-6 rounded-lg ${
-            selectedOdds === 'draw' ? 'bg-green-500' : 'bg-gray-700 hover:bg-gray-600'
+          className={`text-center cursor-pointer p-2 flex-1 sm:flex-none sm:w-24 sm:h-16 rounded-lg ${
+            selectedOdds === 'draw' ? 'bg-[#35FF97] text-gray-700' : 'bg-gray-700 hover:bg-gray-600'
           }`}
           onClick={() => handleBetClick('draw', event.odds_draw)}
         >
           <span className="block text-gray-400 text-sm">X</span>
-          <span className="block font-bold text-white">{event.odds_draw.toFixed(2)}</span>
+          <span className="block font-bold">{event.odds_draw.toFixed(2)}</span>
         </div>
         <div
-          className={`text-center cursor-pointer p-2 px-6 rounded-lg ${
-            selectedOdds === 'lose' ? 'bg-green-500' : 'bg-gray-700 hover:bg-gray-600'
+          className={`text-center cursor-pointer p-2 flex-1 sm:flex-none sm:w-24 sm:h-16 rounded-lg ${
+            selectedOdds === 'lose' ? 'bg-[#35FF97] text-gray-700' : 'bg-gray-700 hover:bg-gray-600'
           }`}
           onClick={() => handleBetClick('lose', event.odds_lose)}
         >
           <span className="block text-gray-400 text-sm">2</span>
-          <span className="block font-bold text-white">{event.odds_lose.toFixed(2)}</span>
+          <span className="block font-bold">{event.odds_lose.toFixed(2)}</span>
         </div>
       </div>
     </div>

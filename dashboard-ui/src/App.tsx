@@ -1,23 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import Layout from './components/layout/Layout';
 import Home from './pages/Home';
-import { AuthProvider } from './context/AuthContext';
+import OfflinePage from './pages/OfflinePage';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const App: React.FC = () => {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
   return (
-    <AuthProvider>
-      <Router>
-        <Layout>
+    <Router>
+      <Layout>
+        {isOnline ? (
           <Routes>
             <Route path="/" element={<Home />} />
           </Routes>
-          <ToastContainer />
-        </Layout>
-      </Router>
-    </AuthProvider>
+        ) : (
+          <OfflinePage />
+        )}
+        <ToastContainer />
+      </Layout>
+    </Router>
   );
 };
 

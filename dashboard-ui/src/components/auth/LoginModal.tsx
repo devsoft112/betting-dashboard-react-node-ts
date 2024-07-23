@@ -55,6 +55,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onRequestClose }) => {
               required
             />
           </div>
+          <span className="text-white">Forgot your password?</span>
+          <div className="form-group mt-6">
+            <input type="checkbox" id="terms" />
+            <label htmlFor="terms" style={{ display: 'inline' }}>Remember me</label>
+          </div>
           <button type="submit" className="submit-button">Start Playing</button>
         </form>
       </div>

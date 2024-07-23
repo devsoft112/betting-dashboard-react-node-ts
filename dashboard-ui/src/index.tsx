@@ -5,6 +5,8 @@ import store from './store';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import { AuthProvider } from './context/AuthContext';
 
 import './index.css';
 import './styles/modal.css';
@@ -15,11 +17,17 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <AuthProvider>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </AuthProvider>
+
   </Provider>
 );
+
+// Register the service worker
+serviceWorkerRegistration.register(); // Add this line
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

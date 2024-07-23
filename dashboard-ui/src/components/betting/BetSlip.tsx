@@ -104,21 +104,18 @@ const BetSlip: React.FC = () => {
       {bets.length === 0 ? (
         <div className="flex flex-col items-center text-center text-gray-400">
           <p className="mb-2">Choose the odds and Just Bet It</p>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded mb-2">Turn On Quick Bet</button>
-          <p>or</p>
-          <button className="bg-gray-700 text-white px-4 py-2 rounded mt-2">Enter Betslip code</button>
         </div>
       ) : (
         <>
           <div className="flex mb-4">
             <button
-              className={`flex-1 p-2 rounded ${betType === 'single' ? 'bg-green-500' : 'bg-gray-700'}`}
+              className={`flex-1 p-2 rounded ${betType === 'single' ? 'bg-[#35FF97] text-gray-700' : 'bg-gray-700'}`}
               onClick={() => setBetType('single')}
             >
               Single Bet
             </button>
             <button
-              className={`flex-1 p-2 rounded ${betType === 'combo' ? 'bg-green-500' : 'bg-gray-700'}`}
+              className={`flex-1 p-2 rounded ${betType === 'combo' ? 'bg-[#35FF97] text-gray-700' : 'bg-gray-700'}`}
               onClick={() => setBetType('combo')}
             >
               Combo
@@ -128,9 +125,8 @@ const BetSlip: React.FC = () => {
             <div key={bet.id} className="mb-4 bg-gray-700 p-4 rounded">
               <div className="flex justify-between items-center mb-2">
                 <div>
-                  <p className="text-sm font-bold">{bet.event_name}</p>
-                  <p className="text-sm">{bet.team1_name} vs {bet.team2_name}</p>
-                  <p className="text-sm">Outcome: {bet.bet_type === 'win' ? bet.team1_name : bet.bet_type === 'draw' ? 'Draw' : bet.team2_name}</p>
+                  <p className="text-sm font-bold">{bet.team1_name} vs {bet.team2_name}</p>
+                  <p className="text-sm">Winner: {bet.bet_type === 'win' ? bet.team1_name : bet.bet_type === 'draw' ? 'Draw' : bet.team2_name}</p>
                 </div>
                 <button
                   className="text-red-500"
@@ -139,6 +135,8 @@ const BetSlip: React.FC = () => {
                   🗑
                 </button>
               </div>
+              <p className="text-sm mt-2">Odds: {bet.odds}</p>
+              <p className="text-sm">Possible win: ${bet.amount ? (bet.amount * bet.odds).toFixed(2) : '0.00'}</p>
               {betType === 'single' && (
                 <div className="flex items-center space-x-2 mt-2">
                   <input
@@ -156,8 +154,6 @@ const BetSlip: React.FC = () => {
                   </button>
                 </div>
               )}
-              <p className="text-sm mt-2">Odds: {bet.odds}</p>
-              <p className="text-sm">Possible win: ${bet.amount ? (bet.amount * bet.odds).toFixed(2) : '0.00'}</p>
             </div>
           ))}
           {betType === 'combo' && (
@@ -179,7 +175,7 @@ const BetSlip: React.FC = () => {
           )}
           <p className="text-sm mb-2">Possible win: ${possibleWin}</p>
           <button
-            className="bg-green-500 text-white w-full py-2 rounded mt-4"
+            className="bg-[#35FF97] text-gray-700 w-full py-2 rounded mt-4"
             onClick={handlePlaceBet}
           >
             Place Bet (${betType === 'combo' ? comboBetAmount.toFixed(2) : bets.reduce((sum, bet) => sum + bet.amount, 0).toFixed(2)})

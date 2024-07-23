@@ -1,68 +1,69 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { HomeIcon, PlayIcon, StarIcon, SearchIcon, PlusIcon } from '@heroicons/react/outline';
+import { HomeIcon, PlayIcon, StarIcon, PlusIcon, XIcon } from '@heroicons/react/outline';
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   return (
-    <aside className="bg-gray-800 text-white w-64 p-4">
+    <aside className={`bg-gray-800 text-white w-64 p-4 pt-24 fixed top-0 left-0 h-full transition-transform transform shadow-2xl ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 z-20`}>
+      <div className="w-full text-right">
+        <button className="md:hidden text-white mb-4" onClick={onClose}>
+          <XIcon className="h-6 w-6" />
+        </button>
+      </div>
+
       <nav>
         <ul className="space-y-4">
           <li className="flex items-center space-x-2">
             <HomeIcon className="h-5 w-5" />
-            <Link to="/" className="text-lg font-bold">Home</Link>
+            <span className="text-md font-bold">Home</span>
           </li>
           <li className="flex items-center space-x-2">
             <PlayIcon className="h-5 w-5" />
-            <Link to="/live" className="text-lg font-bold">Live</Link>
+            <span className="text-md font-bold">Live</span>
           </li>
           <li className="flex items-center space-x-2">
             <StarIcon className="h-5 w-5" />
-            <Link to="/favorites" className="text-lg font-bold">Favorites</Link>
+            <span className="text-md font-bold">Favorites</span>
           </li>
           <li className="flex items-center space-x-2">
             <StarIcon className="h-5 w-5" />
-            <Link to="/tournaments" className="text-lg font-bold">Tournament</Link>
+            <span className="text-md font-bold">Tournament</span>
           </li>
         </ul>
-        <div className="mt-6">
-          <div className="relative">
-            <SearchIcon className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full bg-gray-700 text-white py-2 pl-10 pr-4 rounded-md focus:outline-none"
-            />
-          </div>
-        </div>
+        <hr className="mt-6" />
         <div className="mt-6">
           <h2 className="text-xl font-bold">Sports</h2>
           <ul className="space-y-4 mt-4">
             <li className="flex items-center justify-between">
-              <Link to="/sports/football" className="text-lg">Football</Link>
+              <span className="text-md">Football</span>
               <PlusIcon className="h-5 w-5 text-gray-400" />
             </li>
             <li className="flex items-center justify-between">
-              <Link to="/sports/basketball" className="text-lg">Basketball</Link>
+              <span className="text-md">Basketball</span>
               <PlusIcon className="h-5 w-5 text-gray-400" />
             </li>
             <li className="flex items-center justify-between">
-              <Link to="/sports/ice-hockey" className="text-lg">Ice Hockey</Link>
+              <span className="text-md">Ice Hockey</span>
               <PlusIcon className="h-5 w-5 text-gray-400" />
             </li>
             <li className="flex items-center justify-between">
-              <Link to="/sports/tennis" className="text-lg">Tennis</Link>
+              <span className="text-md">Tennis</span>
               <PlusIcon className="h-5 w-5 text-gray-400" />
             </li>
             <li className="flex items-center justify-between">
-              <Link to="/sports/table-tennis" className="text-lg">Table Tennis</Link>
+              <span className="text-md">Table Tennis</span>
               <PlusIcon className="h-5 w-5 text-gray-400" />
             </li>
             <li className="flex items-center justify-between">
-              <Link to="/sports/american-football" className="text-lg">American Football</Link>
+              <span className="text-md">American Football</span>
               <PlusIcon className="h-5 w-5 text-gray-400" />
             </li>
             <li className="mt-4">
-              <Link to="/sports/all" className="text-sm text-gray-400">See All (16)</Link>
+              <span className="text-sm text-gray-400">See All (16)</span>
             </li>
           </ul>
         </div>

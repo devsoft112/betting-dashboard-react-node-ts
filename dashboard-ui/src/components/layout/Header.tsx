@@ -3,8 +3,13 @@ import { useAuth } from '../../context/AuthContext';
 import LoginModal from '../auth/LoginModal';
 import RegisterModal from '../auth/RegisterModal';
 import UserDropdown from '../auth/UserDropdown';
+import { MenuIcon, LoginIcon, UserAddIcon } from '@heroicons/react/outline';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onMenuClick: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -19,11 +24,14 @@ const Header: React.FC = () => {
   };
 
   if (isLoading) {
-    return <div className="relative bg-gray-900 text-white p-4 flex justify-between items-center">Loading...</div>;
+    return <div className="fixed top-0 left-0 right-0 bg-gray-900 text-white p-4 flex justify-between items-center">Loading...</div>;
   }
 
   return (
-    <header className="relative bg-gray-900 text-white p-4 flex justify-between items-center">
+    <header className="fixed top-0 left-0 right-0 bg-gray-900 text-white p-4 flex justify-between items-center z-50">
+      <button className="md:hidden text-white" onClick={onMenuClick}>
+        <MenuIcon className="h-6 w-6" />
+      </button>
       <div className="flex items-center">
         <img src="/static/gamdom-logo.svg" alt="Logo" className="mr-2" />
       </div>
@@ -43,15 +51,17 @@ const Header: React.FC = () => {
           <>
             <button 
               onClick={() => setIsLoginModalOpen(true)} 
-              className="bg-gray-700 text-white px-4 py-2 rounded"
+              className="bg-gray-700 text-white font-bold px-4 py-2 rounded flex items-center"
             >
-              Sign In
+              <LoginIcon className="h-5 w-5 md:hidden" />
+              <span className="hidden md:inline">Sign In</span>
             </button>
             <button 
               onClick={() => setIsRegisterModalOpen(true)} 
-              className="bg-green-500 text-white px-4 py-2 rounded"
+              className="bg-[#35FF97] text-gray-700 font-bold px-4 py-2 rounded flex items-center"
             >
-              Create Account
+              <UserAddIcon className="h-5 w-5 md:hidden" />
+              <span className="hidden md:inline">Create Account</span>
             </button>
           </>
         )}

@@ -46,7 +46,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const decodedUser: User = jwtDecode<User>(token);
             setUser(decodedUser);
             setIsAuthenticated(true);
-            toast.success('Logged in successfully!');
         } catch (error) {
             toast.error('Invalid credentials. Please try again.');
         }
@@ -61,7 +60,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const decodedUser: User = jwtDecode<User>(token);
             setUser(decodedUser);
             setIsAuthenticated(true);
-            toast.success('Account created successfully!');
         } catch (error) {
             toast.error('Registration failed. Please try again.');
         }
