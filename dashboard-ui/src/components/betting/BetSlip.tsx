@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-import { removeBet, updateBetAmount, updateBalance } from '../../store/slices/betSlipSlice';
+import { updateBetAmount, updateBalance } from '../../store/slices/betSlipSlice';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
 import BetSlipItem from './BetSlipItem';

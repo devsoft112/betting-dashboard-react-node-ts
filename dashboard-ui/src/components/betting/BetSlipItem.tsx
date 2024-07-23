@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { removeBet, updateBetAmount } from '../../store/slices/betSlipSlice';
+import { removeBet } from '../../store/slices/betSlipSlice';
 import { BetSlip } from '../../store/slices/betSlipSlice';
 import { useAuth } from '../../context/AuthContext';
 
