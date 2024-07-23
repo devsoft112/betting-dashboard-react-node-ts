@@ -70,7 +70,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         delete api.defaults.headers.common['Authorization'];
         setUser(null);
         setIsAuthenticated(false);
-        toast.success('Logged out successfully!');
     };
 
     const updateBalance = (newBalance: number) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import EventList from '../components/betting/EventList';
+import EventList from '../components/events/EventList';
 import BetSlip from '../components/betting/BetSlip';
 
 const Home: React.FC = () => {

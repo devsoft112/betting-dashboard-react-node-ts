@@ -69,7 +69,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onRequestClose })
           </div>
           <div className="form-group">
             <input type="checkbox" id="terms" required />
-            <label htmlFor="terms" style={{ display: 'inline' }}>I agree with the <a href="#">Terms of Service</a> and I am 18+</label>
+            <label htmlFor="terms" style={{ display: 'inline' }}>I agree with the <a href="/">Terms of Service</a> and I am 18+</label>
           </div>
           <div className="form-group">
             <input type="checkbox" id="offers" />
