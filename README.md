@@ -35,7 +35,7 @@ This project is a full-stack application for an online betting dashboard. It inc
     ```
 4. Start the backend server:
     ```bash
-    npm start
+    npm run dev
     ```
 
 ### Frontend Setup

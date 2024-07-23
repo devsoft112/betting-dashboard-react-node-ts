@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface BetSlip {
+export interface BetSlip {
   id: number;
   event_name: string;
   team1_name: string;

@@ -1,14 +1,14 @@
-// BetSlip.tsx
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-import { removeBet, updateBetAmount } from '../../store/slices/betSlipSlice';
+import { updateBetAmount, updateBalance } from '../../store/slices/betSlipSlice';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
+import BetSlipItem from './BetSlipItem';
 
 const BetSlip: React.FC = () => {
   const dispatch = useDispatch();
-  const { user, updateBalance } = useAuth();
+  const { user, updateBalance: updateAuthBalance } = useAuth();
   const bets = useSelector((state: RootState) => state.betSlip.bets);
 
   const [comboBetAmount, setComboBetAmount] = useState<number>(0);
@@ -78,7 +78,8 @@ const BetSlip: React.FC = () => {
 
     // Deduct the bet amount from the balance
     const newBalance = (user?.balance ?? 0) - totalBetAmount;
-    updateBalance(newBalance);
+    updateAuthBalance(newBalance);
+    dispatch(updateBalance(newBalance));
 
     // Logic to place the bet (e.g., sending to server) goes here
     toast.success('Bet placed successfully!', {
@@ -122,39 +123,12 @@ const BetSlip: React.FC = () => {
             </button>
           </div>
           {bets.map(bet => (
-            <div key={bet.id} className="mb-4 bg-gray-700 p-4 rounded">
-              <div className="flex justify-between items-center mb-2">
-                <div>
-                  <p className="text-sm font-bold">{bet.team1_name} vs {bet.team2_name}</p>
-                  <p className="text-sm">Winner: {bet.bet_type === 'win' ? bet.team1_name : bet.bet_type === 'draw' ? 'Draw' : bet.team2_name}</p>
-                </div>
-                <button
-                  className="text-red-500"
-                  onClick={() => dispatch(removeBet(bet.id))}
-                >
-                  🗑
-                </button>
-              </div>
-              <p className="text-sm mt-2">Odds: {bet.odds}</p>
-              <p className="text-sm">Possible win: ${bet.amount ? (bet.amount * bet.odds).toFixed(2) : '0.00'}</p>
-              {betType === 'single' && (
-                <div className="flex items-center space-x-2 mt-2">
-                  <input
-                    type="number"
-                    className={`bg-gray-600 text-white p-2 rounded w-full ${invalidBetIds.includes(bet.id) ? 'border border-red-500' : ''}`}
-                    value={bet.amount || ''}
-                    onChange={(e) => handleSingleBetAmountChange(bet.id, parseFloat(e.target.value) || 0)}
-                    placeholder="Bet amount"
-                  />
-                  <button
-                    className="bg-gray-600 text-white p-2 rounded"
-                    onClick={() => handleSingleBetAmountChange(bet.id, user?.balance ?? 0)}
-                  >
-                    Max
-                  </button>
-                </div>
-              )}
-            </div>
+            <BetSlipItem
+              key={bet.id}
+              bet={bet}
+              invalidBetIds={invalidBetIds}
+              handleSingleBetAmountChange={handleSingleBetAmountChange}
+            />
           ))}
           {betType === 'combo' && (
             <div className="mb-4">
