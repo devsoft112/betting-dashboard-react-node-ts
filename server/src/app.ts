@@ -18,7 +18,6 @@ app.use(bodyParser.json());
 // Use central route handler
 app.use('/api', routes);
 
-// Error handling middleware
 app.use(errorHandler);
 
 export default app;
